@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
+
+{% block title %}Search-{{ query }}-BigBear{% endblock title %}
+
+{% block content %}
+<!--面包导航-->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-white border-0 rounded-0 mb-2 py-2 f-15">
+        <li class="breadcrumb-item">
+            <i class="fa fa-home mr-1"></i><a href="/">首页</a>
+        </li>
+        <li class="breadcrumb-item">搜索</li>
+        <li class="breadcrumb-item">{{ query }}</li>
+    </ol>
+</nav>
+<!--end-->
+<!--文章列表-->
+<div class="row">
+    <div class="col-sm-8">
+        {% include "blog/_post.html" %}
+        <div class="page-footer">{{ render_pagination(pagination) }}</div>
+    </div>
+    <div class="col-sm-4 sidebar">
+        {% include "blog/_sidebar.html" %}
+    </div>
+</div>
+{% endblock content %}

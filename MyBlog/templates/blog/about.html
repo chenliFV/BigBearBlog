@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="card-body px-2 px-md-3 pb-0">
+                <h1 class="card-title text-center font-weight-bold text-info">关于本站</h1>
+                <hr>
+                <div class="text-center f-13">
+                    <span class="mx-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="最后编辑于2020年03月02日">2020年07月28日 21:04</span>
+                </div>
+                <div class="article-body mt-4 f-17" style="line-height:1.8">
+                    <p style="text-align:center"><img alt="bearpython" src="static/miaomiao.png"  title="bearpython"></p>
+                    <p>作为一名技术人员中的守望者，自从接触Python开始，不由得感叹：<strong><code>人生苦短，我用Python！你若盛开，清风自来！</code></strong></p>
+                    <p>本站主要用来记录本人以Python为核心的心路历程以及其他学习资源，本站采用纯Flask开发的个人博客系统，如果您有需要可加我个人微信（FVfengye），留言<strong><code>flask博客源码</code></strong>即可，我会将本站源代码打包发送给您。</p>
+                    <p><strong><code>本站的愿景：Python开源的拓路人！</code></strong></p>
+                    <p><strong><code>本站的使命：帮助更多的人轻松愉快的用Python编程！</code></strong></p>
+                    <p><strong><code>本站的价值观：责任，创新，互助！</code></strong></p>
+                </div>
+                <blockquote class="p-1 f-14 mt-3" style="border-left: 4px solid #dc3545;">
+                        <p class="m-1"><strong>版权声明：</strong>如无特殊说明，文章均为本站原创，转载请注明出处！</p>
+                </blockquote>
+            </div>
+        </div>
+        <div class="col-sm-4 sidebar">
+            {% include "blog/_sidebar.html" %}
+        </div>
+    </div>
+{% endblock %}

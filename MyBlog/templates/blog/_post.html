@@ -1,0 +1,31 @@
+{% if posts %}
+    <div class="summary-list">
+        {% for post in posts %}
+            <div class="media mb-1 mb-sm-2 p-2 p-lg-3" style="background: #F5F5F5">
+                <div class="media-body">
+                    <div class="text-muted mb-2 f-12">
+                        <img class="avatar" src="{{ url_for('static',filename='miao.ico') }}"
+                             alt="BigBear">
+                        <span>Bigbear</span>
+                        <span><i class="fa fa-calendar-times-o ml-2 mr-1"></i>{{ post.timestamp|pretty_date }}</span>
+                    </div>
+                    <h5 class="mt-0 font-weight-bold">
+                        <a href="{{ url_for('.show_post', post_id=post.id) }}"
+                           style="color: #0f6674">{{ post.title }}</a>
+                    </h5>
+                    <p class="d-none d-sm-block mb-2 f-15">{{ post.content|truncate(120,killwords=True,leeway=0) }}</p>
+                    <div class="text-muted mb-0 f-12">
+                        <a class="cate" href="/category/{{ post.category_id }}" title="查看当前分类下更多文章">
+                            <i class="fa fa-book mr-1"></i>{{ post.category.name }}</a>
+                        <span><i class="fa fa-eye ml-2 mr-1"></i>{{ post.vc }}</span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <!-- 没有文章时,则tip提示无文章 -->
+    <div class="tip">
+        <h5>这里一篇文章也没有...</h5>
+    </div>
+{% endif %}

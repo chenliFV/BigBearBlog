@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row errorpage">
+        <div class="col align-self-center error-img text-center">
+            <div class="errorimg">
+                <img class="img-fluid" src="{{url_for('static',filename='404.png')}}">
+            </div>
+            <div class="errormsg">
+                <h3>哇哦！您好像访问到了未知星球...</h3>
+                <a href="/">返回地球</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,102 @@
+{% from 'bootstrap/nav.html' import render_nav_item %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <link href="static/miao.ico" rel="icon" type="image/x-icon"/>
+        <title>{% block title %}{% endblock title %} - {{ admin.blog_title|default('MyBlog') }}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+        <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    {% endblock head %}
+</head>
+<body>
+{% block nav %}
+    <div class="row">
+        <div class="col-sm-12">
+            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+                <div class=" container">
+                    <a class="navbar-brand"
+                       href="{{ url_for('blog.index') }}">{{ admin.blog_title|default('MyBlog') }}</a>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item dropdown ">
+                            <a href="#" class="nav-link dropdown-toggle " role="button"
+                               data-toggle="dropdown">文章分类<span class="caret"></span></a>
+                            <div class="dropdown-menu ">
+                                {% for category in categories %}
+                                    <a class="dropdown-item"
+                                       href="{{ url_for('blog.show_category',category_id=category.id) }}">{{ category.name }}</a>
+                                {% endfor %}
+                            </div>
+                        </li>
+                        {{ render_nav_item('blog.archive', '归档') }}
+                        {{ render_nav_item('blog.about', '关于本站') }}
+                        {% if current_user.is_authenticated %}
+                            <li class="nav-item dropdown ">
+                                <a href="#" class="nav-link dropdown_toggle" data-toggle="dropdown" role="button">
+                                    新建<span class="caret"></span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ url_for('admin.new_post') }}">文章</a>
+                                    <a class="dropdown-item" href="{{ url_for('admin.new_category') }}">分类</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">
+                                    管理<span class="caret"></span>
+                                    {% if unread_comments %}
+                                        <span class="badge badge-success">new</span>
+                                    {% endif %}
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ url_for('admin.manage_post') }}">文章</a>
+                                    <a class="dropdown-item" href="{{ url_for('admin.manage_category') }}">分类</a>
+                                    <a class="dropdown-item" href="{{ url_for('admin.manage_comments') }}">评论
+                                        {% if unread_comments %}
+                                            <span class="badge badge-success">{{ unread_comments }}</span>
+                                        {% endif %}
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown ">
+                                {{ render_nav_item('login.logout', '注销') }}
+                            </li>
+                        {% else %}
+                            {{ render_nav_item('login.login', '登录') }}
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+{% endblock nav %}
+<main class="container">
+    {% for message in get_flashed_messages(with_categories=True) %}
+        <!--alert:信息提示框-->
+        <div class="alert alert-{{ message[0] }}" role="alert">
+            <!--设置消息提示框关闭按钮-->
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message[1] }}
+        </div>
+    {% endfor %}
+    {% block content %}
+    {% endblock content %}
+</main>
+{% block footer %}
+    <footer class="text-center">
+        <small> &copy; 2020 BigBear -
+            <a href="https://github.com/chenliFV" title="Fork me on GitHub">GitHub</a>
+        </small>
+    </footer>
+{% endblock footer %}
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.2.1.slim.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- 引入Moment.js库,用于渲染时间 -->
+    {{ moment.include_moment(local_js=url_for('static', filename='js/moment-with-locales.min.js')) }}
+{% endblock %}
+</body>
+</html>

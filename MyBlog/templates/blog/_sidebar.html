@@ -1,0 +1,43 @@
+{% if g.search_form %}
+    <form class="nav-item navbar-form mr-2 py-md-2" role="search" method="POST" id="searchform"
+          action="{{ url_for('blog.search') }}">
+        {{ g.search_form.hidden_tag() }}
+        <div class="input-group">
+            {{ g.search_form.search(type='search',class='form-control rounded-0',placeholder='站内搜素',maxlength=64,value=query) }}
+            <div class="input-group-btn">
+                <button class="btn btn-info rounded-0" type="submit"><i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+{% endif %}
+{% if categories %}
+    <div class="card mb-3">
+        <div class="card-header">文章归类</div>
+        <ul class="list-group list-group-flush">
+            {% for category in categories %}
+                <li class="list-group-item  list-group-item-action d-flex justify-content-between align-items-center">
+                    <a href="{{ url_for('blog.show_category', category_id=category.id) }}">
+                        {{ category.name }}
+                    </a>
+                    <span class="badge badge-primary badge-pill"> {{ category.posts|length }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+{% if categories %}
+    <div class="card mb-3">
+        <div class="card-header">最新文章</div>
+        <ul class="list-group list-group-flush">
+            {% for a in g.recent_articles %}
+                <li class="list-group-item  list-group-item-action d-flex justify-content-between align-items-center">
+                    <a href="{{ url_for('blog.show_post',post_id=a.id) }}">
+                        {{ a.title | truncate(28,killwords=True,leeway=0) }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
